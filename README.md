@@ -1,30 +1,60 @@
-**Brave Web Search Skill**
-========
+# Marx AI Edge Skills
 
-**Skill Webhost Path**\
-https://jasonssl.github.io/google-ai-edge-skills/brave-web-search/
+A curated, modular collection of JavaScript skills for the Google AI Edge Gallery. Each skill lives in its own directory under `docs/` so components can be tested independently and later combined into a larger agent toolkit.
 
-**Skill Source Repository**\
-https://github.com/jasonssl/google-ai-edge-skills/tree/main/docs/brave-web-search
+## Included skills
 
-**Skill Description**\
-This skill allows you to search the live internet. 
+### Brave Web Search
 
-**Skill Type:** JS skill
+Searches the live internet through the Brave Search API.
 
-**How to use**\
-Load this skill in the Google AI Edge Gallery app using the webhost path above, then try prompts "Show me the top 3 news for today"
+- Skill source: [`docs/brave-web-search`](docs/brave-web-search)
+- Webhost path: `https://mrmarx87.github.io/google-ai-edge-skills/brave-web-search/`
+- Secret required: Brave Search API key
+- Origin: retained from the `jasonssl/google-ai-edge-skills` fork lineage
 
-========
+### Persistent Memory Tool
 
-Licensed under the Apache License, Version 2.0 (the "License"); \
-you may not use this file except in compliance with the License. \
-You may obtain a copy of the License at
+Stores user-approved facts, preferences, and project context in local device storage, then retrieves them across otherwise stateless chat sessions.
 
-    http://www.apache.org/licenses/LICENSE-2.0
+- Skill source: [`docs/lethe-memory`](docs/lethe-memory)
+- Webhost path: `https://mrmarx87.github.io/google-ai-edge-skills/lethe-memory/`
+- Secret required: none
+- Compatible actions: `save_memory`, `get_context`, `get_memories`, `search_memories`, `delete_memory`, `wipe_memories`
+- Provenance: interface adapted from [`pbrns/Lethe`](https://github.com/pbrns/Lethe); details are recorded in [`SOURCE.md`](docs/lethe-memory/SOURCE.md)
 
-Unless required by applicable law or agreed to in writing, software \
-distributed under the License is distributed on an "AS IS" BASIS, \
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. \
-See the License for the specific language governing permissions and \
-limitations under the License.
+## Repository layout
+
+```text
+docs/
+├── brave-web-search/
+│   ├── SKILL.md
+│   └── scripts/
+└── lethe-memory/
+    ├── SKILL.md
+    ├── SOURCE.md
+    └── scripts/
+```
+
+## Adding another skill
+
+Create one self-contained directory under `docs/<skill-name>/` with:
+
+1. `SKILL.md` containing the skill metadata and agent instructions.
+2. `scripts/index.html` as the Google AI Edge Gallery entry page.
+3. Any supporting JavaScript or assets inside the same `scripts/` directory.
+4. `SOURCE.md` when the skill is adapted from another project, recording its repository, revision, license, and what changed locally.
+
+Keeping skills isolated prevents one experiment from quietly altering another. Shared behavior can later be moved into a deliberate common runtime after the individual modules are tested.
+
+## GitHub Pages
+
+Configure GitHub Pages to deploy from the `main` branch and `/docs` directory. Each skill will then be available at:
+
+```text
+https://mrmarx87.github.io/google-ai-edge-skills/<skill-name>/
+```
+
+## License
+
+This repository remains licensed under the Apache License 2.0. Individual source notes preserve upstream attribution and revision history.
